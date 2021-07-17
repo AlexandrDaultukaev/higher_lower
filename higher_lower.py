@@ -1,5 +1,8 @@
 from game_data import data
 import random
+import os
+
+clear = lambda: os.system('cls')
 
 def getrand(first_number):
     second_number = random.randint(0, 19)
@@ -8,34 +11,37 @@ def getrand(first_number):
     return second_number
 
 def game():
+    counter = 0
     GAME_OVER = False
     first = getrand(-1)
     second = getrand(first)
     if first == second:
         first -= 1
-    while not GAME_OVER:    
+    while not GAME_OVER:
         print("Compare A: " + data[first]["name"] + ", a " + data[first]["description"] + ", from " + data[first]["country"] + ".\n")
         print("Against B: " + data[second]["name"] + ", a " + data[second]["description"] + ", from " + data[second]["country"] + ".\n")
-
         choice = input("Who has more followers? Type 'A' or 'B': ").upper()
+        clear()
         print("A: " + data[first]["name"] + " has " + str(data[first]["followers"]) + " million followers\n")
         print("B: " + data[second]["name"] + " has " + str(data[second]["followers"]) + " million followers\n")
         if choice == 'A':
             if data[first]["followers"] > data[second]["followers"]:
                 first = second
                 second = getrand(first)
-                print("\n\t\t✔✔✔\n")
+                counter += 1
+                print("\n\t\t✔✔✔\n\t\tcounter: " + str(counter))
             else:
                 GAME_OVER = True
-                print("\n\t\t✖✖✖\n")
+                print("\n\t\t✖✖✖\n\t\tcounter: " + str(counter))
         elif choice == 'B':
             if data[first]["followers"] < data[second]["followers"]:
                 first = second
                 second = getrand(first)
-                print("\n\t\t✔✔✔\n")
+                counter += 1
+                print("\n\t\t✔✔✔\n\t\tcounter: " + str(counter))
             else:
                 GAME_OVER = True
-                print("\n\t\t✖✖✖\n")
+                print("\n\t\t✖✖✖\n\t\tcounter: " + str(counter))
         else:
             print("Don't understand this symbol: " + choice + "\n")
             exit()
