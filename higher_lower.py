@@ -21,6 +21,12 @@ def print_data(first_person, second_person):
     print("B: " + data[second_person]["name"] + " has " + str(data[second_person]["followers"]) + " million followers\n")
     return choice
 
+def check_answer(guess, a, b):
+    if a > b:
+        return guess == "A"
+    else:
+        return guess == "B"
+
 def game():
     print(art.logo)
     counter = 0
@@ -31,22 +37,12 @@ def game():
         first = second
         second = getrand(first)
         choice = print_data(first, second)
-        if choice == 'A':
-            if data[first]["followers"] > data[second]["followers"]:
-                counter += 1
-                print("\n\t\t✔✔✔\n\t\tcounter: " + str(counter))
-            else:
-                GAME_OVER = True
-                print("\n\t\t✖✖✖\n\t\tcounter: " + str(counter))
-        elif choice == 'B':
-            if data[first]["followers"] < data[second]["followers"]:
-                counter += 1
-                print("\n\t\t✔✔✔\n\t\tcounter: " + str(counter))
-            else:
-                GAME_OVER = True
-                print("\n\t\t✖✖✖\n\t\tcounter: " + str(counter))
+        is_correct = check_answer(choice, data[first]["followers"], data[second]["followers"])
+        if is_correct:
+            counter += 1
+            print("\n\t\t✔✔✔\n\t\tcounter: " + str(counter))
         else:
-            print("Don't understand this symbol: " + choice + "\n")
-            exit()
+            GAME_OVER = True
+            print("\n\t\t✖✖✖\n\t\tcounter: " + str(counter))
 
 game()
